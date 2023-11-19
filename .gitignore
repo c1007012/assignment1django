@@ -1,2 +1,4 @@
 .venv
 *.pyc
+
+#file to ignore 5000 git commits
