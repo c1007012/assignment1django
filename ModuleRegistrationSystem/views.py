@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Module
 
 
 def home(request):
@@ -11,6 +12,7 @@ def contact(request):
     return render(request, 'ModuleRegistrationSystem/contact.html', {'title': 'Contact Us'})
 
 def module(request):
-    return render(request, 'ModuleRegistrationSystem/modulelist.html', {'title': 'List of Module Pages'})
+    daily_module = {'module': Module.objects.all(), 'title': 'Modules Registered'}
+    return render(request, 'ModuleRegistrationSystem/modulelist.html', daily_module)
 
 # Create your views here.
