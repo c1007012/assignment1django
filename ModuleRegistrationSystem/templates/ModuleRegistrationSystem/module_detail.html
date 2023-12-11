@@ -3,18 +3,16 @@
 
 <body>
 
-    <h1>List of {{ course }} Modules </h1>
+    <h1>Module Details</h1>
 
-{% for module in modules %}
 <article class="media content-section">
     <div class="media-body">
-        <h2><a class="article-title" href="{% url 'ModuleRegistrationSystem:module-detail' module.id %}">{{ module }}</a></h2>
+        <h2 class="article-title"> Module: {{object.name}}</h2>
         <small class="text-muted"> Credit: {{ module.credit }}</small>
         <p class="article-content">{{ module.description }}</p>
     </div>
 </article>
-</body>
-{% endfor %}
+
 
 
 {% endblock content %}

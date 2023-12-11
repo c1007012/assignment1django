@@ -5,5 +5,5 @@ class StudentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'students'
 
-def ready(self):
-    from .signals import create_profile
+    def ready(self):
+        from .signals import create_profile

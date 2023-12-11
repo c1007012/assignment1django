@@ -1,8 +1,6 @@
 from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.urls import reverse
-
 
 class Module(models.Model):
     name = models.CharField(max_length = 100)
@@ -27,4 +25,7 @@ class Course (models.Model):
         return f'{self.name}'
     def get_absolute_url(self):
         return reverse('ModuleRegistrationSystem:course-detail', kwargs = {'pk': self.pk})
+    
+class CourseGroup(Group):
+    description = models.TextField(blank=True)
 # Create your models here.

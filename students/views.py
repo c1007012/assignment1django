@@ -8,7 +8,8 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            user.groups.add(form.cleaned_data.get('course'))
             username = form.cleaned_data.get('username')
             messages.success(request, f'Your account has been created! Now you can login!')
             return redirect('login')
@@ -34,8 +35,8 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance = request.user)
         p_form = ProfileUpdateForm(instance = request.user.profile)
-        context = {'u_form': u_form, 'p_form': p_form, 'title': 'Student Profile'}
-        return render(request, 'students/profile.html', context)
+    context = {'u_form': u_form, 'p_form': p_form, 'title': 'Student Profile'}
+    return render(request, 'students/profile.html', context)
 
 
 # Create your views here.
