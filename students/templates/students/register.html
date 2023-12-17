@@ -4,20 +4,21 @@
 
 <div class="content-section">
     <form method="POST">
-    {% csrf_token %}
- 
-<fieldset class="form-group">
-    <legend class="border-bottom mb-4">Module Registration Form</legend>
-    {{ form | crispy}}
-    </fieldset>
+        {% csrf_token %}
+    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+        <div class="form-floating mb-3">
+            {{ form | crispy }}
+        </div>
+        <div class="d-none" id="submitSuccessMessage">
+            <div class="text-center mb-3">
+                <br />
+                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+            </div>
+        </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">Are You Already Registered?<a class="ml-2" href="{% url 'login' %}">Login</a></small>
+        </div>
+        <div class="d-grid"><button class="btn btn-outline-info" type="submit">Register</button>
 
-<div class="form-group">
-    <button class="btn btn-outline-info" type="submit">Register</button>
-    </div>
     </form>
-
- <div class="border-top pt-3">
-    <small class="text-muted">Are You Already Registered?<a class="ml-2" href="{% url 'login' %}">Login</a></small>
-    </div>
-    </div>
     {% endblock content %}

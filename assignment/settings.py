@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ModuleRegistrationSystem.apps.ModuleregistrationsystemConfig',
     'students.apps.StudentsConfig',
-    'Course.apps.CourseConfig'
-,   'crispy_forms',
+    'crispy_forms',
     'crispy_bootstrap4',
+
 ]
 
 MIDDLEWARE = [
@@ -131,6 +131,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'ModuleRegistrationSystem:home'
 
+CRISPY_ALLOWED_TEMPLATE_PACK ='bootstrap4'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'nate1007012@gmail.com'
+EMAIL_HOST_PASSWORD = 'hmpc cvzd utjj vhhb'

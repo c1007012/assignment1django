@@ -5,13 +5,33 @@
 
     <h1>Module Details</h1>
 
-<article class="media content-section">
-    <div class="media-body">
-        <h2 class="article-title"> Module: {{object.name}}</h2>
-        <small class="text-muted"> Credit: {{ module.credit }}</small>
-        <p class="article-content">{{ module.description }}</p>
-    </div>
-</article>
+    <section class="py-5" id="features">
+        <div class="media-body">
+            <h2 class="article-title"> Module: {{object.name}}</h2>
+            <small class="text-muted"> Credit: {{ module.credit }}</small>
+            <p class="article-content">{{ module.description }}</p>
+        </div>
+    </section>
+
+    {% for registration in registrations %}
+    <section class="py-5" id="features">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-8">
+                    <div class="row gx-5 row-cols-1 row-cols-md-2">
+                        <div class="col mb-5 h-100">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
+                            <h2><p class="article-content">Registered Students: </p>  </h2>
+                            <h2 class="h5"><a class="article-title" href="{% url 'profile' %}">{{ registration.student }}</a></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endfor %}
+</body>
+
 
 
 
