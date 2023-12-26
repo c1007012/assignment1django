@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import Module, Registration
 from django.views.generic import ListView, DetailView, FormView
 from .forms import ContactForm
@@ -12,6 +12,7 @@ from django.contrib.auth.models import Group
 def home(request):
     daily_course = {'course': Group.objects.all(), 'title' : 'Course List'}
     return render(request, 'ModuleRegistrationSystem/home.html', daily_course)
+    
 
 def about(request):
     return render(request, 'ModuleRegistrationSystem/about.html', {'title': 'About Us'})
@@ -48,10 +49,12 @@ class ContactFormView(FormView):
         return self.request.path
 
 class PostListView(ListView):
+    paginate_by = 3
     model = Module
     template_name = 'ModuleRegistrationSystem/modulelist.html'
-    context_object_name = 'models'
+    context_object_name = 'module'
     ordering = ['-name']
+    
 
     def get_context_data(self, **kwargs: any):
         context = super().get_context_data(**kwargs)
@@ -69,6 +72,31 @@ class PostDetailView(DetailView):
         context.update({'title': 'Contact Us', 'registrations': registrations})
         
         return context
+    
+@login_required
+def register_module(request, module_id):
+    module = get_object_or_404(Module, id=module_id)
+    user_groups = request.user.groups.all()
+
+    existing_registration = Registration.objects.filter(student=request.user, module=module).exists()
+
+    if existing_registration:
+        messages.info(request, 'You have already registered for this module')
+        return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
+
+    module_courses = module.courses.all()
+    if not any(group in user_groups for group in module_courses):
+        messages.error(request, 'It is not possible to register for modules that are outside of your course')
+        return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
+
+    if request.method == 'POST':
+        registration = Registration(student=request.user, module=module)
+        registration.save()
+
+
+        messages.success(request, 'You are now registered to this Module')
+
+    return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
 
 
 # Create your views here.

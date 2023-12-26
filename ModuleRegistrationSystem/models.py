@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User, Group, Permission
 from django.urls import reverse
 
-
 class Module(models.Model):
     name = models.CharField(max_length = 100)
     code = models.PositiveIntegerField()
@@ -19,6 +18,6 @@ class Module(models.Model):
         return reverse('ModuleRegistrationSystem:module-detail', kwargs = {'pk': self.pk})
     
 class Registration(models.Model):
-    student = models.OneToOneField(User, related_name = 'registrations', on_delete = models.CASCADE)
-    module = models.OneToOneField(Module, related_name = 'registrations', on_delete = models.CASCADE)
+    student = models.ForeignKey(User, related_name = 'registrations', on_delete = models.CASCADE)
+    module = models.ForeignKey(Module, related_name = 'registrations', on_delete = models.CASCADE)
     date_of_registration = models.DateField(default = timezone.now)
