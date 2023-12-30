@@ -98,5 +98,29 @@ def register_module(request, module_id):
 
     return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
 
+@login_required
+def unregister_module(request, module_id):
+    module = get_object_or_404(Module, id=module_id)
+    user = request.user
+
+    existing_registration = Registration.objects.filter(student=user, module=module).exists()
+
+    if not existing_registration:
+        messages.info(request, 'You have not registered for this module')
+        return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
+
+    if request.method == 'POST':
+        registration = Registration.objects.filter(student=request.user, module=module).first()
+
+        if registration:
+            registration.delete()
+            messages.success(request, 'You are now unregistered from this Module')
+        else:
+            messages.error(request, "Error: Registration not found.")
+
+
+    return redirect('ModuleRegistrationSystem:module-detail', pk=module_id)
+
+
 
 # Create your views here.

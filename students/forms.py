@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
@@ -24,3 +24,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['date', 'address', 'city_town', 'country', 'image']
+
+class CustomPasswordResetForm(PasswordResetForm):
+    pass

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.views import PasswordResetView
 from django.contrib import messages
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CustomPasswordResetForm
 
 def register(request):
     if request.method == 'POST':
@@ -38,5 +39,11 @@ def profile(request):
     context = {'u_form': u_form, 'p_form': p_form, 'title': 'Student Profile'}
     return render(request, 'students/profile.html', context)
 
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
+    email_template_name = 'students/password_reset_email.html'
+    subject_template_name = 'students/password_reset_subject.txt'
+    template_name = 'students/password_reset.html'
+    html_email_template_name = 'students/password_reset_email.html'
 
 # Create your views here.
