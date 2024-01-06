@@ -29,7 +29,7 @@ DEBUG = WEBSITE_HOSTNAME == None
 ALLOWED_HOSTS = [] if DEBUG else [WEBSITE_HOSTNAME]
 
 if not DEBUG:
-        CSRF__TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+        CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
 
 
 # Application definition
