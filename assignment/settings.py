@@ -24,13 +24,11 @@ WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = WEBSITE_HOSTNAME == None
+DEBUG = (os.environ.get('WEBSITE_HOSTNAME') is None)
 
-if DEBUG:
-        ALLOWED_HOSTS = []
-else:
-        ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
-        CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+ALLOWED_HOSTS = [] if DEBUG else [os.environ.get('WEBSITE_HOSTNAME')]
+
+CSRF_COOKIE_SECURE = not DEBUG
 
 
 # Application definition
